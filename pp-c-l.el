@@ -165,7 +165,7 @@ returns is used instead of `pp^L-^L-string'."
 The function accepts as argument the window where the ^L is displayed.
 If the option value is non-nil, option `pp^L-^L-string' is not used.
 You can use this option to have a dynamically defined display string.
-For example, this value displays a window-width horizontal line:
+For example, this value displays a `window-width' horizontal line:
   (lambda (win) (make-string (1- (window-width win)) ?_))"
   :type '(choice (const :tag "None" nil) function) :group 'Pretty-Control-L)
 
@@ -189,7 +189,7 @@ use either \\[customize] or command `pretty-control-l-mode'."
     :type 'boolean :group 'Pretty-Control-L))
 
 (defun pp^L-^L-display-table-entry (window)
-  "Returns the display-table entry for Control-l (`^L') char in WINDOW.
+  "Return the display-table entry for Control-l (`^L') char in WINDOW.
 A vector determining how a Control-l character is displayed in WINDOW.
 Either a vector of characters or nil.  The characters are displayed in
 place of the Control-l character.  nil means `^L' is displayed.
@@ -203,6 +203,10 @@ and `pp^L-^L-string-post'."
                      pp^L-^L-string))
            (mapconcat (lambda (c) (list c)) pp^L-^L-string-post "")))
 
+(eval-when-compile
+  (defvar pretty-control-l-mode)
+  (declare-function pretty-control-l-mode "pp-c-l.el")
+  (declare-function pp^L-make-glyph-code "pp-c-l.el"))
 ;;;###autoload
 (defalias 'pp^l 'pretty-control-l-mode)
 (if (fboundp 'define-minor-mode)
